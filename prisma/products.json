@@ -1,0 +1,38 @@
+[
+  {
+    "id": "cmod489750007xaz1vl28po8k",
+    "name": "Cuchillo Táctico KA-BAR USMC",
+    "slug": "kabar-usmc",
+    "description": "El legendario cuchillo de combate y supervivencia. Hoja de acero al carbono.",
+    "price": 320000,
+    "stock": 12,
+    "images": "[\"/uploads/kabar-usmc-1.jpg\", \"/uploads/kabar-usmc-2.jpg\"]",
+    "featured": true,
+    "categoryId": "cmod4896n0001xaz1dory3g0s",
+    "category": {
+      "id": "cmod4896n0001xaz1dory3g0s",
+      "name": "Knives",
+      "slug": "knives"
+    },
+    "createdAt": "2026-04-24T16:19:10.097Z",
+    "updatedAt": "2026-04-24T16:19:10.097Z"
+  },
+  {
+    "id": "cmod4896y0005xaz1vdca4zti",
+    "name": "Pistola Traumática Glock 19 Gen 5",
+    "slug": "glock-19-gen-5",
+    "description": "Réplica traumática de alta calidad, ideal para prácticas de tiro y defensa personal.",
+    "price": 650000,
+    "stock": 5,
+    "images": "[\"/uploads/glock19-gen5-1.jpg\", \"/uploads/glock19-gen5-2.jpg\"]",
+    "featured": true,
+    "categoryId": "cmod489630000xaz1g68ufwnl",
+    "category": {
+      "id": "cmod489630000xaz1g68ufwnl",
+      "name": "Weapons",
+      "slug": "weapons"
+    },
+    "createdAt": "2026-04-24T16:19:10.090Z",
+    "updatedAt": "2026-04-24T16:19:10.090Z"
+  }
+]
