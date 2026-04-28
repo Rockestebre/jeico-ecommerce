@@ -1,7 +1,6 @@
 import { NextAuthOptions } from 'next-auth'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import bcrypt from 'bcryptjs'
 import { prisma } from './db'
 
 export const authOptions: NextAuthOptions = {
@@ -26,9 +25,8 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.password)
-
-        if (!isValid) {
+        // 🛠️ ADIÓS A BCRYPT: Ahora compara el texto plano directamente
+        if (credentials.password !== user.password) {
           return null
         }
 
