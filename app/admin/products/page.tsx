@@ -148,7 +148,7 @@ export default function AdminProductsPage() {
                         </TableCell>
                         <TableCell className="font-medium">{product.name}</TableCell>
                         <TableCell>{product.category?.name}</TableCell>
-                        <TableCell>${product.price?.toFixed(2)}</TableCell>
+                        <TableCell>${product.price?.toLocaleString('es-CO', { maximumFractionDigits: 0 })}</TableCell>
                         <TableCell>
                           <span className={product.stock <= 0 ? 'text-destructive font-medium' : ''}>
                             {product.stock}

@@ -199,11 +199,11 @@ export default function NewProductPage() {
                   <Input
                     id="price"
                     type="number"
-                    step="0.01"
+                    step="1"
                     min="0"
                     value={form.price}
                     onChange={(e) => setForm((prev) => ({ ...prev, price: e.target.value }))}
-                    placeholder="0.00"
+                    placeholder="0"
                     required
                   />
                 </div>

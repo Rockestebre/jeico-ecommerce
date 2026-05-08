@@ -50,7 +50,7 @@ export function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <Link href={`/products/${product.id}`} className="group block">
+    <Link href={`/products/${product.slug}`} className="group block">
       <div className="relative overflow-hidden rounded-lg border border-border bg-card transition-all duration-normal hover:shadow-lg hover:border-primary/30">
         <div className="relative aspect-square overflow-hidden bg-muted">
           {firstImage ? (
@@ -87,7 +87,6 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h3>
           <div className="flex items-center justify-between">
-            {/* 🛠️ AQUÍ ESTÁ EL CAMBIO: Formato de miles y COP */}
             <span className="text-lg font-bold">${product.price?.toLocaleString('es-CO')} COP</span>
             <Button
               size="sm"

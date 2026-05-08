@@ -6,9 +6,16 @@ import { prisma } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 function formatProduct(product: any) {
+  let images = product.images
+  if (typeof images === 'string') {
+    try { images = JSON.parse(images) } catch { images = [] }
+  }
+  if (!Array.isArray(images)) images = []
+
   return {
     ...product,
     price: product.price ? Number(product.price) : 0,
+    images,
   }
 }
 
@@ -87,7 +94,7 @@ export async function POST(req: NextRequest) {
         description: description || null,
         price,
         stock: stock ?? 0,
-        images: images ?? [],
+        images: JSON.stringify(images ?? []),
         featured: featured ?? false,
         categoryId,
       },

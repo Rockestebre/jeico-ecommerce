@@ -75,7 +75,7 @@ export default function EditProductPage() {
             stock: p.stock?.toString() || '',
             categoryId: p.categoryId,
             featured: p.featured,
-            images: p.images || [],
+            images: Array.isArray(p.images) ? p.images : [],
           })
         }
         if (categoriesRes.ok) setCategories(await categoriesRes.json())
@@ -226,11 +226,11 @@ export default function EditProductPage() {
                   <Input
                     id="price"
                     type="number"
-                    step="0.01"
+                    step="1"
                     min="0"
                     value={form.price}
                     onChange={(e) => setForm((prev) => ({ ...prev, price: e.target.value }))}
-                    placeholder="0.00"
+                    placeholder="0"
                     required
                   />
                 </div>

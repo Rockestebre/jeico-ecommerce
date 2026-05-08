@@ -6,9 +6,16 @@ import { prisma } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 function formatProduct(product: any) {
+  let images = product.images
+  if (typeof images === 'string') {
+    try { images = JSON.parse(images) } catch { images = [] }
+  }
+  if (!Array.isArray(images)) images = []
+
   return {
     ...product,
     price: product.price ? Number(product.price) : 0,
+    images,
   }
 }
 
@@ -17,8 +24,13 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const product = await prisma.product.findUnique({
-      where: { id: params.id },
+    const product = await prisma.product.findFirst({
+      where: {
+        OR: [
+          { slug: params.id },
+          { id: params.id },
+        ]
+      },
       include: { category: true },
     })
 
@@ -81,7 +93,7 @@ export async function PUT(
         description: description !== undefined ? description : undefined,
         price: price !== undefined ? price : undefined,
         stock: stock !== undefined ? stock : undefined,
-        images: images !== undefined ? images : undefined,
+        images: images !== undefined ? JSON.stringify(images) : undefined,
         featured: featured !== undefined ? featured : undefined,
         categoryId: categoryId ?? undefined,
       },

@@ -166,7 +166,7 @@ export default function ProductDetailPage() {
             </h1>
 
             <p className="text-3xl font-bold text-primary">
-              ${product.price?.toFixed(2)}
+              ${product.price?.toLocaleString('es-CO', { maximumFractionDigits: 0 })} COP
             </p>
 
             {product.description && (
