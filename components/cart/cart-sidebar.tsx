@@ -1,6 +1,6 @@
 'use client'
 
-import { X, Plus, Minus, ShoppingBag, Trash2 } from 'lucide-react'
+import { X, Plus, Minus, ShoppingBag, Trash2, MessageCircle } from 'lucide-react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -131,12 +131,35 @@ export function CartSidebar() {
                 {/* 🛠️ TOTAL GENERAL FORMATEADO */}
                 <span className="text-lg font-bold">{formatPrice(totalPrice)}</span>
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                <Button variant="outline" onClick={clearCart}>
-                  Vaciar
+              <div className="grid gap-2">
+                <Button
+                  className="w-full bg-[#25D366] hover:bg-[#1fb855] text-white gap-2 text-base py-5"
+                  onClick={() => {
+                    const formatP = (n: number) => `$${n.toLocaleString('es-CO')} COP`
+                    const lines = items.map(
+                      (item) =>
+                        `${item.quantity}x ${item.product.name} — ${formatP(item.product.price * item.quantity)}`
+                    )
+                    const msg = [
+                      '*Nuevo pedido JEICO*',
+                      '',
+                      ...lines,
+                      '',
+                      `*Total: ${formatP(totalPrice)}*`,
+                      '',
+                      '¡Hola! Quiero hacer este pedido.',
+                    ].join('\n')
+                    window.open(
+                      `https://wa.me/573003320285?text=${encodeURIComponent(msg)}`,
+                      '_blank'
+                    )
+                  }}
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Pedir por WhatsApp
                 </Button>
-                <Button className="bg-primary hover:bg-primary/90">
-                  Checkout
+                <Button variant="outline" size="sm" onClick={clearCart}>
+                  Vaciar carrito
                 </Button>
               </div>
             </div>
