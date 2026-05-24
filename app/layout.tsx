@@ -3,6 +3,7 @@ import './globals.css'
 import { Providers } from '@/components/providers'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { WhatsAppButton } from '@/components/whatsapp-button'
 import { Toaster } from '@/components/ui/sonner'
 import { ChunkLoadErrorHandler } from '@/components/chunk-load-error-handler'
 import type { Metadata } from 'next'
@@ -72,6 +73,7 @@ export default function RootLayout({
             {children}
           </main>
           <SiteFooter />
+          <WhatsAppButton />
           <Toaster />
           <ChunkLoadErrorHandler />
         </Providers>
