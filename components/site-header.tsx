@@ -4,10 +4,18 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
-import { Menu, X, Shield, LogOut, User } from 'lucide-react'
+import { Menu, X, Shield, LogOut, User, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CartButton } from '@/components/cart/cart-button'
 import { CartSidebar } from '@/components/cart/cart-sidebar'
+
+const navLinks = [
+  { name: 'Productos', href: '/products' },
+  { name: 'Weapons', href: '/products?category=weapons' },
+  { name: 'Knives', href: '/products?category=knives' },
+  { name: 'Fishing', href: '/products?category=fishing' },
+  { name: 'Hobbies', href: '/products?category=hobbies' },
+]
 
 export function SiteHeader() {
   const { data: session } = useSession()
@@ -16,123 +24,88 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 w-full bg-[#0F0F0F] border-b border-white/5">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
-          {/* Logo Badge - sobresale de la barra */}
-          <Link href="/" className="relative flex-shrink-0 group">
-            <div className="relative -my-1 md:-my-2">
-              {/* Glow de fondo */}
-              <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              {/* Contenedor del logo */}
-              <div className="relative flex items-center justify-center h-10 w-10 md:h-12 md:w-12 rounded-lg md:rounded-xl bg-primary shadow-md shadow-primary/30 ring-1 ring-primary/20 group-hover:ring-primary/40 group-hover:shadow-primary/50 transition-all duration-300 group-hover:scale-105">
-                <Image
-                  src="/brand/jeico-logo-new.png"
-                  alt="JEICO"
-                  fill
-                  className="object-contain p-1 md:p-1.5"
-                  priority
-                  sizes="(max-width: 768px) 40px, 48px"
-                />
-              </div>
+
+          {/* Logo + nombre */}
+          <Link href="/" className="group flex items-center gap-3 flex-shrink-0">
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-[#D8071B] shadow-lg shadow-[#D8071B]/20 transition-transform group-hover:scale-105">
+              <Image src="/brand/jeico-logo-new.png" alt="JEICO" fill className="object-contain p-1" priority sizes="36px" />
             </div>
-            <span className="sr-only">JEICO</span>
+            <span className="hidden sm:block font-display text-base font-bold tracking-wider text-white uppercase">JEICO</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/products" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Productos
-            </Link>
-            <Link href="/products?category=weapons" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Weapons
-            </Link>
-            <Link href="/products?category=knives" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Knives
-            </Link>
-            <Link href="/products?category=fishing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Fishing
-            </Link>
-            <Link href="/products?category=hobbies" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Hobbies
-            </Link>
+          {/* Nav desktop */}
+          <nav className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link key={link.name} href={link.href} className="px-3 py-1.5 text-sm font-medium text-white/60 uppercase tracking-wider transition-colors hover:text-white relative group">
+                {link.name}
+                <span className="absolute bottom-0 left-3 right-3 h-px bg-[#D8071B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              </Link>
+            ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          {/* Acciones */}
+          <div className="flex items-center gap-1">
             <CartButton />
             {session?.user ? (
-              <div className="hidden md:flex items-center gap-2">
+              <div className="hidden md:flex items-center gap-1">
                 {isAdmin && (
                   <Link href="/admin/products">
-                    <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground hover:text-foreground">
+                    <Button variant="ghost" size="sm" className="gap-1.5 text-white/60 hover:text-white hover:bg-white/5">
                       <Shield className="h-4 w-4" />
                       Admin
                     </Button>
                   </Link>
                 )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => signOut({ callbackUrl: '/' })}
-                  className="gap-1.5 text-muted-foreground hover:text-foreground"
-                >
+                <Button variant="ghost" size="sm" onClick={() => signOut({ callbackUrl: '/' })} className="gap-1.5 text-white/60 hover:text-white hover:bg-white/5">
                   <LogOut className="h-4 w-4" />
-                  Salir
                 </Button>
               </div>
             ) : (
               <Link href="/login" className="hidden md:block">
-                <Button variant="ghost" size="sm" className="gap-1.5">
-                  <User className="h-4 w-4" />
+                <Button size="sm" className="bg-[#D8071B] hover:bg-[#B8102F] text-white gap-1.5 text-xs uppercase tracking-wider">
+                  <User className="h-3.5 w-3.5" />
                   Entrar
                 </Button>
               </Link>
             )}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
+            <Button variant="ghost" size="icon" className="md:hidden text-white/80 hover:text-white hover:bg-white/5" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
+        {/* Menú móvil */}
         {mobileOpen && (
-          <div className="md:hidden border-t border-border/40 bg-background px-4 py-4 space-y-3">
-            <Link href="/products" className="block text-sm font-medium py-2" onClick={() => setMobileOpen(false)}>
-              Productos
-            </Link>
-            <Link href="/products?category=weapons" className="block text-sm font-medium py-2" onClick={() => setMobileOpen(false)}>
-              Weapons
-            </Link>
-            <Link href="/products?category=knives" className="block text-sm font-medium py-2" onClick={() => setMobileOpen(false)}>
-              Knives
-            </Link>
-            <Link href="/products?category=fishing" className="block text-sm font-medium py-2" onClick={() => setMobileOpen(false)}>
-              Fishing
-            </Link>
-            <Link href="/products?category=hobbies" className="block text-sm font-medium py-2" onClick={() => setMobileOpen(false)}>
-              Hobbies
-            </Link>
-            {session?.user ? (
-              <>
-                {isAdmin && (
-                  <Link href="/admin/products" className="block text-sm font-medium py-2 text-primary" onClick={() => setMobileOpen(false)}>
-                    Panel Admin
-                  </Link>
-                )}
-                <button
-                  onClick={() => { signOut({ callbackUrl: '/' }); setMobileOpen(false); }}
-                  className="block text-sm font-medium py-2 w-full text-left text-muted-foreground"
-                >
-                  Cerrar sesión
-                </button>
-              </>
-            ) : (
-              <Link href="/login" className="block text-sm font-medium py-2 text-primary" onClick={() => setMobileOpen(false)}>
-                Iniciar sesión
+          <div className="md:hidden border-t border-white/5 bg-[#0F0F0F] px-4 py-3 space-y-1">
+            {navLinks.map((link) => (
+              <Link key={link.name} href={link.href} className="flex items-center justify-between py-3 text-sm font-medium text-white/70 uppercase tracking-wider hover:text-white transition-colors" onClick={() => setMobileOpen(false)}>
+                {link.name}
+                <ChevronRight className="h-4 w-4 text-white/20" />
               </Link>
-            )}
+            ))}
+            <div className="border-t border-white/5 pt-3 mt-2">
+              {session?.user ? (
+                <>
+                  {isAdmin && (
+                    <Link href="/admin/products" className="flex items-center gap-2 py-3 text-sm font-medium text-[#D8071B] uppercase tracking-wider" onClick={() => setMobileOpen(false)}>
+                      <Shield className="h-4 w-4" />
+                      Panel Admin
+                    </Link>
+                  )}
+                  <button onClick={() => { signOut({ callbackUrl: '/' }); setMobileOpen(false); }} className="flex items-center gap-2 py-3 text-sm font-medium text-white/50 uppercase tracking-wider w-full text-left">
+                    <LogOut className="h-4 w-4" />
+                    Cerrar sesión
+                  </button>
+                </>
+              ) : (
+                <Link href="/login" className="flex items-center gap-2 py-3 text-sm font-medium text-[#D8071B] uppercase tracking-wider" onClick={() => setMobileOpen(false)}>
+                  <User className="h-4 w-4" />
+                  Iniciar sesión
+                </Link>
+              )}
+            </div>
           </div>
         )}
       </header>
